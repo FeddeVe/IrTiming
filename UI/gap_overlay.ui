@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Gap_Overlay</class>
+ <widget class="QWidget" name="Gap_Overlay">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>818</width>
+    <height>471</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">color: rgb(200, 200, 200);
+alternate-background-color: rgb(32 32, 32);
+background-color: rgb(0, 0, 0);
+font: 57 14pt &quot;DINPro-Medium&quot;;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="4">
+        <widget class="QCheckBox" name="checkBox_2">
+         <property name="text">
+          <string>Show Borders</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string>Race</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Practice</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Mode:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Show LapTImes</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QCheckBox" name="checkBox_3">
+         <property name="text">
+          <string>Auto Scroll</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="styleSheet">
+      <string notr="true">font: 57 14pt &quot;DINPro-Medium&quot;;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <column>
+      <property name="text">
+       <string>CarIDX</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>DistanceDriven</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>ClassPosition</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>GAP</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>NAME</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>LAPS IN STINT</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>LAST</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>AVGX</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>CALC_ALL</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>CALC_CLEAN</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Stint_Overlay</class>
+ <widget class="QWidget" name="Stint_Overlay">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>436</width>
+    <height>429</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">color: rgb(200, 200, 200);
+font: 57 10pt &quot;DINPro-Medium&quot;;
+alternate-background-color: rgb(32 32, 32);
+background-color: rgb(0, 0, 0);</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="text">
+      <string>FullScreen</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QTableWidget" name="tableWidget">
+       <property name="styleSheet">
+        <string notr="true">font: 57 14pt &quot;DINPro-Medium&quot;;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;DINPro-Light&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Current Fuel:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="styleSheet">
+          <string notr="true">font: 57 22pt &quot;DINPro-Medium&quot;;</string>
+         </property>
+         <property name="text">
+          <string>CUR_FUEL</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;DINPro-Light&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Laps Remain:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">font: 57 22pt &quot;DINPro-Medium&quot;;
+background-color: rgb(60, 0, 182);</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;DINPro-Light&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Fuel to add:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="styleSheet">
+          <string notr="true">font: 57 22pt &quot;DINPro-Medium&quot;;</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_10">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;DINPro-Light&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Avg Fuel per lap:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="styleSheet">
+          <string notr="true">font: 57 22pt &quot;DINPro-Medium&quot;;
+background-color: rgb(53, 0, 159);</string>
+         </property>
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;DINPro-Light&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Time in Stint:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="styleSheet">
+          <string notr="true">font: 57 16pt &quot;DINPro-Medium&quot;;</string>
+         </property>
+         <property name="text">
+          <string>TIME IN STINT</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_13">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;DINPro-Light&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Possible Laps In Stint</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_14">
+         <property name="styleSheet">
+          <string notr="true">font: 57 22pt &quot;DINPro-Medium&quot;;
+background-color: rgb(53, 0, 159);</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
