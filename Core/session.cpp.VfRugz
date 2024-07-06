@@ -1,0 +1,25 @@
+#include "session.h"
+
+Session::Session(QObject *parent) : QObject(parent)
+{
+
+}
+
+void Session::on_telemetry_update(ir_tel_vars *vars){
+
+    this->SessionTime = vars->SessionTime->value[0].toDouble();
+    this->SessionNum = vars->SessionNum->value[0].toInt();
+    this->SessionState = vars->SessionState->value[0].toInt();
+    this->SessionFlags = vars->SessionFlags->value[0].toInt();
+    this->SessionTimeRemain = vars->SessionTimeRemain->value[0].toDouble();
+    this->SessionLapsRemain = vars->SessionLapsRemainEx->value[0].toDouble();
+    this->SessionTimeOfDay = vars->SessionTimeOfDay->value[0].toFloat();
+
+
+
+    int SessionFlags;
+    double SessionTimeRemain;
+    int SessionLapsRemain; // using the ex version
+    float SessionTimeOfDay;
+    QDate Session_DateTime;
+}

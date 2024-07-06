@@ -1,0 +1,187 @@
+#include "myteam.h"
+
+MyTeam::MyTeam(QObject *parent) : QObject(parent)
+{
+  this->reset();
+
+}
+
+void MyTeam::reset(){
+  this->carontrack = false;
+  this->caridx = -1;
+  this->my_team = nullptr;
+    this->time_remain = 0;
+    this->laps_remain = 0;
+  this->cur_fuel = 0;
+  this->fuel_level_start = 0;
+  this->fuel_distance_start = 0;
+  this->fuel_laps = 0;
+  this->fuel_avg_lap = 0;
+  this->fuel_lap_level = 0;
+  this->fuel_till_end = 0;
+  this->fuel_add_laps = 1;
+  this->fuel_session_time = 0;
+  for(int i = 0; i < this->tire_wear.count(); i++){
+      delete this->tire_wear[i];
+    }
+  this->tire_wear.clear();
+
+}
+
+void MyTeam::update_from_telemetry(ir_tel_vars *v){
+  this->carontrack = v->IsOnTrack->value[0].toBool();
+
+  if(this->my_team != nullptr){
+  if(this->my_team->avg_laps->laptime != 0){
+      this->laps_remain = ((v->SessionTimeRemain->value[0].toFloat() / this->my_team->avg_laps->laptime) + 1);
+      this->time_remain = v->SessionLapsRemainEx->value[0].toInt() * this->my_team->avg_laps->laptime;
+  }
+    }
+  this->calc_fuel(v);
+
+  while(this->tire_wear.count() <= v->CarIdxLap->value[this->caridx].toInt()){
+      Tire_Wear *w = new Tire_Wear(this);
+      this->tire_wear.push_back(w);
+    }
+}
+
+void MyTeam::set_tyrewear(float lf, float rf, float lr, float rr, int lap){
+  while(lap >= this->tire_wear.count()){
+      Tire_Wear *w = new Tire_Wear(this);
+      this->tire_wear.push_back(w);
+    }
+  this->tire_wear[lap]->lf = lf;
+  this->tire_wear[lap]->rf = rf;
+  this->tire_wear[lap]->lr = lr;
+  this->tire_wear[lap]->rr = rr;
+  this->tire_wear[lap]->type = 2;
+}
+
+void MyTeam::calculate_tyres(){
+  float lf = 0;
+  float rf = 0;
+  float lr = 0;
+ float rr = 0;
+ float last_lf = 0;
+ float last_rf = 0;
+ float last_lr = 0;
+ float last_rr = 0;
+ int count = 0;
+
+  for(int i = 0; i < this->tire_wear.count(); i++){
+     if(this->tire_wear[i]->type == 2){
+         if((last_lf < this->tire_wear[i]->lf) || (last_lr < this->tire_wear[i]->lr) || (last_rf < tire_wear[i]->rf) || (last_rr < tire_wear[i]->rr)){
+              lf = 0;
+              rf = 0;
+              lr = 0;
+              rr = 0;
+              count = 0;
+           }else{
+             lf = lf + (last_lf - this->tire_wear[i]->lf);
+             rf = rf + (last_rf - this->tire_wear[i]->rf);
+             lr = lr + (last_lr - this->tire_wear[i]->lr);
+             rr = rr + (last_rr - this->tire_wear[i]->rr);
+             count++;
+           }
+         last_lf = this->tire_wear[i]->lf;
+         last_rf = this->tire_wear[i]->rf;
+         last_lr = this->tire_wear[i]->lr;
+         last_rr = this->tire_wear[i]->rr;
+       }
+    }
+
+    if(count > 0){
+        lf = lf / count;
+        rf = rf / count;
+        lr = lr / count;
+        rr = rr / count;
+      }else{
+        lf = 1;
+        rf = 1;
+        lr = 1;
+        rr = 1;
+      }
+
+    int lap = 0;
+    float calc_lf = 1.0f;
+    float calc_rf = 1.0f;
+    float calc_lr = 1.0f;
+    float calc_rr = 1.0f;
+
+
+    while(lap < 1000){
+        lap++;
+        while(lap >= this->tire_wear.count()){
+            Tire_Wear *t = new Tire_Wear(this);
+            this->tire_wear.push_back(t);
+          }
+        if(this->tire_wear[lap]->type == 2){
+            calc_lf = this->tire_wear[lap]->lf;
+            calc_rf = this->tire_wear[lap]->rf;
+            calc_lr = this->tire_wear[lap]->lr;
+            calc_rr = this->tire_wear[lap]->rr;
+          }else{
+            calc_lf = calc_lf - lf;
+            calc_rf = calc_rf - rf;
+            calc_lr = calc_lr - lr;
+            calc_rr = calc_rr - rr;
+            this->tire_wear[lap]->lf = calc_lf;
+            this->tire_wear[lap]->rf = calc_rf;
+            this->tire_wear[lap]->lr = calc_lr;
+            this->tire_wear[lap]->rr = calc_rr;
+            this->tire_wear[lap]->type = 1;
+          }
+
+      }
+}
+
+void MyTeam::calc_fuel(ir_tel_vars *v){
+   if((this->my_team != nullptr)){
+  float f = v->FuelLevel->value[0].toFloat();;
+  float ses_time = v->SessionTimeRemain->value[0].toFloat();
+  if((ses_time < 0) || (this->my_team->onpitroad)){
+      this->fuel_level_start = f;
+      this->fuel_distance_start = this->my_team->distance_driven;
+
+    }
+  if(f > this->cur_fuel){
+      this->fuel_level_start = f;
+      this->fuel_distance_start = this->my_team->distance_driven;
+    }
+  this->cur_fuel = f;
+  this->fuel_session_time = ses_time;
+
+      if(this->my_team->curlap != -1){
+          this->my_team->Laps[this->my_team->curlap]->set_fuel(this->cur_fuel);
+        }
+    }
+   float diff = this->fuel_level_start - this->cur_fuel;
+   if(diff > 0){
+        float diff_driven = this->my_team->distance_driven - this->fuel_distance_start;
+        if(diff_driven > 0){
+            this->fuel_avg_lap = diff / diff_driven;
+          }
+
+     }
+
+   if(this->fuel_avg_lap > 0){
+       this->fuel_laps = this->cur_fuel / this->fuel_avg_lap;
+     }
+   int calc_laps = v->SessionLapsRemainEx->value[0].toFloat();
+   if(calc_laps == IRSDK_UNLIMITED_LAPS){
+       calc_laps = this->laps_remain;
+     }
+   calc_laps = calc_laps + 1;
+   float fuel_needed = calc_laps * this->fuel_avg_lap;
+   fuel_needed = fuel_needed - this->cur_fuel;
+   this->fuel_till_end = fuel_needed;
+
+}
+
+void MyTeam::update_from_sessionstring(SessionString *s){
+  this->caridx = s->driverinfo->get_DriverCarIdx().toInt();
+}
+
+void MyTeam::set_my_team(Team *t){
+  this->my_team = t;
+}
